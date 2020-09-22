@@ -1,4 +1,4 @@
-# VWware Take Home Project
+# VMware Take Home Project
 
 This project is a simple web application built using [Node.js](http://www.nodejs.org) and [AngularJS](http://angularjs.org). The application displays a list of assets in a table. Features include sorting, filtering and adding items to favorites.
 
@@ -15,7 +15,7 @@ Make sure you have installed the following on your development machine:
 Clone the repo
 
 ```bash
-$ git clone
+$ git clone https://github.com/Shane325/vmware-project.git
 ```
 
 Install npm dependencies
