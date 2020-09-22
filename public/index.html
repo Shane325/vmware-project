@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>VM Ware Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+        crossorigin="anonymous">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
+</head>
+
+<body ng-controller="mainController as vm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">VMware</a>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="starter-template">
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="inputPassword2" class="mr-2">Filter:</label>
+                    <select class="custom-select mr-2" ng-model="vm.filterQuery" ng-options="asset for asset in vm.assetTypes">
+                      <option value="">-- by asset --</option>
+                    </select>
+                    <select class="custom-select" ng-model="vm.filterQuery" ng-options="type for type in vm.types">
+                      <option value="">-- by type --</option>
+                    </select>
+                    <a href="#" ng-if="vm.filterQuery !== ''" ng-click="vm.filterQuery=''" class="ml-2">Clear filter</a>
+                    <a href="#" ng-if="vm.storage.favorites.length > 0" ng-click="vm.clearFavorites()" class="ml-2">Clear favorites</a>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <a href="#" ng-click="vm.orderByField='id';vm.reverseSort=!vm.reverseSort;">Id</a>
+                        </th>
+                        <th scope="col">
+                            <a href="#" ng-click="vm.orderByField='assetName';vm.reverseSort=!vm.reverseSort;">Asset name</a>
+                        </th>
+                        <th scope="col">
+                            <a href="#" ng-click="vm.orderByField='price';vm.reverseSort=!vm.reverseSort;">Price</a>
+                        </th>
+                        <th scope="col">
+                            <a href="#" ng-click="vm.orderByField='lastUpdate';vm.reverseSort=!vm.reverseSort;">Last update</a>
+                        </th>
+                        <th scope="col">
+                            <a href="#" ng-click="vm.orderByField='type';vm.reverseSort=!vm.reverseSort;">Type</a>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-success" ng-repeat="favorite in vm.storage.favorites">
+                        <td ng-bind="favorite.id"></td>
+                        <td ng-bind="favorite.assetName"></td>
+                        <td ng-bind="favorite.price | currency"></td>
+                        <td ng-bind="favorite.lastUpdate | date:mediumDate"></td>
+                        <td ng-bind="favorite.type"></td>
+                        <td>
+                        </td>
+                  </tr>
+                    <tr ng-repeat="asset in vm.assets | filter:vm.filterQuery | orderBy:vm.orderByField:vm.reverseSort">
+                        <td ng-bind="asset.id"></td>
+                        <td ng-bind="asset.assetName"></td>
+                        <td ng-bind="asset.price | currency"></td>
+                        <td ng-bind="asset.lastUpdate | date:mediumDate"></td>
+                        <td ng-bind="asset.type"></td>
+                        <td>
+                            <a href="#" ng-click="vm.addToFavorites(asset)" ng-hide="vm.isFavorite(asset)">
+                          <i class="fa fa-star-o" aria-hidden="true"></i>
+                          </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Script files-->
+    <script src="https://use.fontawesome.com/be4811f8d5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+    <script src="core.js"></script>
+
+</body>
+
+</html>
